@@ -1,0 +1,34 @@
+{% extends 'base.html'%}
+
+{% block content %}
+<!-- exam_result_form.html -->
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    {% if students %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Student</th>
+                    <th>Mid-Term Exam</th>
+                    <th>Final Exam</th>
+                    <th>Assessment</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                    <tr>
+                        <td>{{ student.name }}</td>
+                        <td><input type="text" name="mid_exam_{{ student.id }}"></td>
+                        <td><input type="text" name="final_exam_{{ student.id }}"></td>
+                        <td><input type="text" name="assessment_{{ student.id }}"></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button type="submit" name="save">Save</button>
+    {% endif %}
+</form>
+{% endblock %}

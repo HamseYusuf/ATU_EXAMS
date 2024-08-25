@@ -1,0 +1,37 @@
+
+
+
+
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="p-6">
+    <a href="{% url 'depart_create' %}" class="mb-4 inline-block px-4 py-2 bg-red-900 text-white rounded hover:bg-red-900">
+        Add Department
+    </a>
+ 
+
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white border border-gray-200 rounded-md shadow-md">
+            <thead>
+                <tr class="border-b border-gray-300">
+                    <th class="px-6 py-3 text-left text-gray-600">Name</th>
+                    <th class="px-6 py-3 text-left text-gray-600">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for department in dapartments %}
+                <tr class="border-b border-gray-200">
+                    <td class="px-6 py-4">{{ department.name }}</td>
+                    <td class="px-6 py-4 flex space-x-2">
+                        <a href="{% url 'depart_update' department.id%}" class="text-red-800 hover:text-red-900">Update</a>
+                        <a href="{% url 'depart_delete' department.id%}" class="text-red-800 hover:text-red-900">delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

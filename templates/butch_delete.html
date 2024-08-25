@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg mt-10">
+    <h1 class="text-3xl font-semibold text-red-600 text-center mb-6">Delete Course</h1>
+    <p class="text-lg text-gray-700 text-center mb-4">
+        Are you sure you want to delete this course for the year {{ Batch.year }}?
+    </p>
+
+    <div class="overflow-x-auto mb-6">
+        <table class="min-w-full divide-y divide-gray-200 bg-white rounded-lg shadow-md">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Year</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Students</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Semesters</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ butchs.year }}</td>
+                   
+                    <td class="px-6 py-4 whitespace-nowrap">{{ butchs.department }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ butchs.faculty }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <form method="post" class="flex justify-between items-center">
+        {% csrf_token %}
+        <a href="{% url 'batch_list' %}" class="bg-gray-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50">
+            Cancel
+        </a>
+        <input type="submit" value="Delete" class="bg-red-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
+    </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mx-auto p-4">
+    <h1 class="text-3xl font-bold text-center mb-6 text-gray-800">Exam Results</h1>
+
+    <div class="flex justify-end mb-4">
+        <form method="GET" action="{% url 'exam_resul_search' %}" class="flex items-center">
+            <input type="text" name="q" placeholder="Search courses" required 
+                   class="border border-gray-300 rounded-lg px-4 py-2 mr-2 w-80 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <input type="submit" name="search" class="bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500" value="Search">
+        </form>
+    </div>
+
+    <a href="{% url 'exam_resul_create' %}" class="bg-green-800 text-white px-4 py-2 rounded-lg hover:bg-green-900 mb-4 inline-block focus:outline-none focus:ring-2 focus:ring-green-500">
+        Add Result
+    </a>
+
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
+            <thead class="bg-gray-800 text-white">
+                <tr>
+                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Student</th>
+                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Course</th>
+                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Semester</th>
+                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Mid Exam</th>
+                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Final Exam</th>
+                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Assessment</th>
+                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Score</th>
+                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Grade</th>
+                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Credit Points</th>
+                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ExamResult in examresults %}
+                <tr class="hover:bg-gray-100 transition-colors duration-150">
+                    <td class="py-3 px-4 border-b">{{ ExamResult.student }}</td>
+                    <td class="py-3 px-4 border-b">{{ ExamResult.course }}</td>
+                    <td class="py-3 px-4 border-b">{{ ExamResult.semester }}</td>
+                    <td class="py-3 px-4 border-b">{{ ExamResult.mid_exam }}</td>
+                    <td class="py-3 px-4 border-b">{{ ExamResult.final_exam }}</td>
+                    <td class="py-3 px-4 border-b">{{ ExamResult.assissments }}</td>
+                    <td class="py-3 px-4 border-b">{{ ExamResult.score }}</td>
+                    <td class="py-3 px-4 border-b">{{ ExamResult.grade }}</td>
+                    <td class="py-3 px-4 border-b">{{ ExamResult.credit_points }}</td>
+                    <td class="py-3 px-4 border-b flex space-x-2">
+                        <a href="{% url 'exam_resul_update' ExamResult.id %}" class="text-blue-500 hover:text-blue-700">Update</a>
+                        <a href="{% url 'exam_resul_delete' ExamResult.id %}" class="text-red-500 hover:text-red-700">Delete</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="10" class="py-4 px-4 text-center text-gray-500">No exam results found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'base.html'%}
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">Search Results for "{{ query }}"</h2>
+
+    <!-- Back Button -->
+    <div class="mb-6">
+        <a href="{% url 'exam_list' %}" class="inline-block bg-gray-800 text-white font-semibold py-2 px-4 rounded-lg hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-500">
+            Back
+        </a>
+    </div>
+
+    <!-- Results Table -->
+    {% if results %}
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white shadow-md rounded-lg">
+            <thead class="bg-gray-100">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Student</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Course</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Semester</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Score</th>
+                   
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                {% for ExamResult in results %}
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ ExamResult.student }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ ExamResult.course }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ ExamResult.semester }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ ExamResult.score }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ ExamResult.ramrks }}</td>
+                  
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p class="text-center text-lg text-red-500 font-semibold mt-6">No exam results found.</p>
+    {% endif %}
+</div>
+{% endblock %}

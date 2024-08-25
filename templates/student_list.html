@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mx-auto p-4">
+    <h1 class="text-3xl font-bold text-center mb-4">Student List</h1>
+    
+    <div class="flex justify-end mb-4">
+        <form method="GET" action="{% url 'student_search' %}" class="flex items-center">
+            <input type="text" name="q" placeholder="Search students" required 
+                   class="border border-gray-300 rounded-lg px-4 py-2 mr-2 w-80">
+            <input type="submit" name="search" 
+                   class="bg-red-800 text-white px-4 py-2 rounded-lg hover:bg-red-900" value="Search">
+        </form>
+    </div>
+    
+    <a href="{% url 'student_create' %}" 
+       class="bg-red-800 text-white px-4 py-2 rounded-lg hover:bg-red-900 mb-4 inline-block">
+        Add Student
+    </a>
+    
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
+            <thead class="bg-gray-800 text-white">
+                <tr>
+                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Name</th>
+                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Student ID</th>
+                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Phone</th>
+                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Batch</th>
+                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Faculty</th>
+                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                <tr class="hover:bg-gray-100">
+                    <td class="py-2 px-4 border-b">{{ student.name }}</td>
+                    <td class="py-2 px-4 border-b">{{ student.student_id }}</td>
+                    <td class="py-2 px-4 border-b">{{ student.phone }}</td>
+                    <td class="py-2 px-4 border-b">{{ student.batch }}</td>
+                    <td class="py-2 px-4 border-b">{{ student.faculty }}</td>
+                    <td class="py-2 px-4 border-b flex space-x-2">
+                        <a href="{% url 'student_update' student.id %}" 
+                           class="text-green-600 hover:text-green-800" aria-label="Update">
+                            <!-- Update Icon -->
+                            <i class="fas fa-edit fa-lg"></i>
+                        </a>
+                        <a href="{% url 'student_delete' student.id %}" 
+                           class="text-red-600 hover:text-red-800" aria-label="Delete">
+                            <!-- Delete Icon -->
+                            <i class="fas fa-trash fa-lg"></i>
+                        </a>
+                        <a href="{% url 'transcript_detail' student.id %}" 
+                           class="text-blue-600 hover:text-blue-800" aria-label="Transcript">
+                            <!-- Transcript Icon -->
+                            <i class="fas fa-file-alt fa-lg"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="py-2 px-4 text-center text-gray-500">No students found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

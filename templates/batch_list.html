@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto p-6 bg-white shadow-md rounded-lg mt-10">
+    <h1 class="text-3xl font-semibold text-gray-800 mb-6">Batch List</h1>
+    <a href="{% url 'batch_create' %}" class="inline-block mb-4 bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+        Add Batch
+    </a>
+    <div class="flex justify-end mb-4">
+        <form method="GET" action="{% url 'butch_search' %}" class="flex items-center">
+            <input type="text" name="q" placeholder="Search batches" required class="border border-gray-300 rounded-lg px-4 py-2 mr-2 w-80">
+            <input type="submit" name="search" class="bg-red-800 text-white px-4 py-2 rounded-lg hover:bg-red-900" value="Search">
+        </form>
+    </div>
+    
+    <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200 bg-white rounded-lg shadow-md">
+            <thead class="bg-black">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Year</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Department</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Faculty</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Update</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Delete</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                {% for Batch in butchs %}
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ Batch.year }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ Batch.department }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ Batch.faculty }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <a href="{% url 'batch_update' Batch.id %}" class="text-green-600 hover:text-green-800 font-bold">
+                            <svg class="w-6 h-6 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16.292 3.707a1 1 0 011.416 0l2.585 2.585a1 1 0 010 1.415l-7.292 7.292a1 1 0 01-.632.293l-3 0a1 1 0 01-1-1l0-3a1 1 0 01.293-.631l7.292-7.292z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 10l-1.586-1.586m0 0L16.292 7.707m1.415 1.415L19 10m-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-8a2 2 0 00-2-2h-1.5"/>
+                            </svg>
+                        </a>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <a href="{% url 'butch_delete' Batch.id %}" class="text-red-600 hover:text-red-800 font-bold">
+                            <svg class="w-6 h-6 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2 2m0 0l2-2m-2 2V10m4-4h-1m0 0H9m0 0H8m4 4V4m1-2a2 2 0 012 2h-8a2 2 0 012-2m3 4V4m-6 4V4m-2 4v12a2 2 0 002 2h8a2 2 0 002-2V8m-8 4v8m4-8v8"/>
+                            </svg>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

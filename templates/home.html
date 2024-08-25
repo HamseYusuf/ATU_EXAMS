@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examination System Home</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <!-- Sidebar -->
+    <div class="flex">
+        <aside class="w-64 bg-red-800 text-white min-h-screen p-4">
+            <div class="text-2xl font-bold mb-6">Examination System</div>
+            <ul>
+                <!-- Sidebar items, same as the previous code -->
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="flex-grow p-6">
+            <nav class="bg-red-800 p-4 text-white">
+                <div class="container mx-auto flex justify-between">
+                    <a href="#" class="text-2xl font-bold">Examination System</a>
+                </div>
+            </nav>
+
+            <!-- Dashboard -->
+            <section class="container mx-auto mt-8">
+                <h2 class="text-2xl font-semibold mb-4">Dashboard</h2>
+                <div id="dashboard" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Dynamic dashboard cards will be inserted here -->
+                </div>
+            </section>
+
+            <!-- Content -->
+            <main class="min-h-screen">
+                <div class="container mx-auto mt-8">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Existing Cards: Courses, Semesters, Students, Departments, Faculty, Batches, Exam Results -->
+                        <!-- ... your existing cards here ... -->
+                    </div>
+                </div>
+            </main>
+
+           <!-- Footer -->
+           <footer class="bg-red-800 text-white p-3 mt-6">
+            <div class="container mx-auto text-center">
+                <p>&copy; 2024 Examination System. All rights reserved.</p>
+            </div>
+        </footer>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/flowbite@1.4.5/dist/flowbite.js"></script>
+    <script>
+        async function loadDashboardData() {
+            try {
+                const response = await fetch('{% url "dashboard_data" %}');
+                const data = await response.json();
+
+                const dashboard = document.getElementById('dashboard');
+                dashboard.innerHTML = `
+                    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                        <div class="p-6">
+                            <div class="flex items-center">
+                                <i class="fas fa-book text-3xl text-red-800"></i>
+                                <h3 class="text-xl font-semibold ml-4">Courses</h3>
+                               
+                            </div>
+                             <p class="mt-4 text-gray-600">
+                                    Manage and organize all available courses within the examination system.
+                                </p>
+                            <p class="mt-4 text-gray-600">${data.courses} Courses</p>
+                             <a href="{% url 'course_list' %}" class="block mt-4 text-red-800 hover:underline">
+                                    View Courses
+                                </a>
+                        </div>
+                    </div>
+                    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                        <div class="p-6">
+                            <div class="flex items-center">
+                                <i class="fas fa-calendar-alt text-3xl text-red-800"></i>
+                                <h3 class="text-xl font-semibold ml-4">Semesters</h3>
+                            </div>
+                             <p class="mt-4 text-gray-600">
+                                    Track and manage the semesters to which courses and students are assigned.
+                                </p>
+                               
+                            <p class="mt-4 text-gray-600">${data.semesters} Semesters</p>
+                             <a href="{% url 'semester_list' %}" class="block mt-4 text-red-800 hover:underline">
+                                    View Semesters
+                                </a>
+                        </div>
+                    </div>
+                    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                        <div class="p-6">
+                            <div class="flex items-center">
+                                <i class="fas fa-user-graduate text-3xl text-red-800"></i>
+                                <h3 class="text-xl font-semibold ml-4">Students</h3>
+                                 
+                              
+                            </div>
+                            <p class="mt-4 text-gray-600">
+                                    Access and manage the list of students, including their details and academic records.
+                                </p>
+                            <p class="mt-4 text-gray-600">${data.students} Students</p>
+                              <a href="{% url 'student_list' %}" class="block mt-4 text-red-800 hover:underline">
+                                    View Students
+                                </a>
+                        </div>
+
+                    </div>
+                    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                        <div class="p-6">
+                            <div class="flex items-center">
+                                <i class="fas fa-building text-3xl text-red-800"></i>
+                                <h3 class="text-xl font-semibold ml-4">Departments</h3>
+                            </div>
+                            <p class="mt-4 text-gray-600">
+                                    Manage departmental information and associate them with courses and faculties.
+                                </p>
+                               
+                            <p class="mt-4 text-gray-600">${data.departments} Departments</p>
+                             <a href="{% url 'dapart_list' %}" class="block mt-4 text-red-800 hover:underline">
+                                    View Departments
+                                </a>
+                        </div>
+                    </div>
+                    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                        <div class="p-6">
+                            <div class="flex items-center">
+                                <i class="fas fa-chalkboard-teacher text-3xl text-red-800"></i>
+                                <h3 class="text-xl font-semibold ml-4">Faculty</h3>
+                            </div>
+                             <p class="mt-4 text-gray-600">
+                                    View and manage faculty members, including their courses and departments.
+                                </p>
+                               
+                            <p class="mt-4 text-gray-600">${data.faculty} Faculty Members</p>
+                             <a href="{% url 'faculty_list' %}" class="block mt-4 text-red-800 hover:underline">
+                                    View Faculty
+                                </a>
+                        </div>
+                    </div>
+                    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                        <div class="p-6">
+                            <div class="flex items-center">
+                                <i class="fas fa-users text-3xl text-red-800"></i>
+                                <h3 class="text-xl font-semibold ml-4">Batches</h3>
+                            </div>
+                               <p class="mt-4 text-gray-600">
+                                    Organize students into batches for easier management of their academic progress.
+                                </p>
+                               
+                            <p class="mt-4 text-gray-600">${data.batches} Batches</p>
+                             <a href="{% url 'batch_list' %}" class="block mt-4 text-red-800 hover:underline">
+                                    View Batches
+                                </a>
+                        </div>
+                    </div>
+                    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                        <div class="p-6">
+                            <div class="flex items-center">
+                                <i class="fas fa-clipboard-list text-3xl text-red-800"></i>
+                                <h3 class="text-xl font-semibold ml-4">Exam Results</h3>
+                            </div>
+                              <p class="mt-4 text-gray-600">
+                                    Input, manage, and view exam results, including GPA calculations.
+                                </p>
+                                
+                            <p class="mt-4 text-gray-600">${data.exam_results} Exam Results</p>
+                            <a href="{% url 'exam_list' %}" class="block mt-4 text-red-800 hover:underline">
+                                    View Results
+                                </a>
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                console.error('Error loading dashboard data:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadDashboardData);
+    </script>
+</body>
+</html>
+
+
+

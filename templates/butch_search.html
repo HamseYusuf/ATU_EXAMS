@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg mt-10">
+    <h2 class="text-2xl font-semibold text-gray-800 text-center mb-6">
+        Search Results for "{{ query }}"
+    </h2>
+    <a href="{% url 'batch_list' %}" class="inline-block bg-gray-800 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 mb-6">
+        Back
+    </a>
+
+    {% if results %}
+    <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200 bg-white rounded-lg shadow-md">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Year</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Course</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Students</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Semesters</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Update</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Delete</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                {% for Batch in results %}
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ Batch.year }}</td>
+                    <td>
+                        {% for course in Batch.course.all %}
+                            {{ course.title }}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </td>
+                   <td td class="px-6 py-4 whitespace-nowrap">{{Batch.department}}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ Batch.faculty }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <a href="{% url 'batch_update' Batch.id %}" class="text-green-600 hover:text-green-800 font-bold">Update</a>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <a href="{% url 'butch_delete' Batch.id %}" class="text-red-600 hover:text-red-800 font-bold">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p class="mt-4 text-center text-gray-500">No courses found.</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg mt-10">
+    <h2 class="text-2xl font-semibold text-gray-800 text-center mb-6">
+        Search Results for "{{ query }}"
+    </h2>
+    <a href="{% url 'student_list' %}" class="inline-block bg-red-800 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 mb-6">
+        Back
+    </a>
+
+    {% if results %}
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white shadow rounded-lg overflow-hidden">
+            <thead class="bg-gray-800 text-white">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">Name</th>
+                    <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">Student ID</th>
+                    <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">Phone</th>
+                    <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">Batch</th>
+                    <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">Faculty</th>
+                    <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+                {% for student in results %}
+                <tr class="hover:bg-gray-100">
+                    <td class="px-6 py-4 whitespace-nowrap">{{ student.name }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ student.student_id }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ student.phone }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ student.batch }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ student.faculty }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap flex space-x-4">
+                        <a href="{% url 'student_update' student.id %}" class="text-blue-600 hover:text-blue-800" aria-label="Update">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a href="{% url 'student_delete' student.id %}" class="text-red-600 hover:text-red-800" aria-label="Delete">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                        <a href="{% url 'transcript_detail' student.id %}" class="text-blue-600 hover:text-blue-800" aria-label="Transcript">
+                            <i class="fas fa-file-alt"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p class="mt-6 text-center text-gray-500">No students found.</p>
+    {% endif %}
+</div>
+{% endblock %}

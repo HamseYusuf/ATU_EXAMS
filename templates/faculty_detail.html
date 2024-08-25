@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mx-auto px-4 py-6">
+    <h1 class="text-3xl font-semibold mb-4">Faculty Details</h1>
+
+    <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200 bg-white shadow-md rounded-lg">
+            <thead class="bg-gray-800 text-white">
+                <tr>
+                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Name</th>
+                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Department</th>
+                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Faculty ID</th>
+                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Courses Taught</th>
+                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">View</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ facultys.name }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ facultys.department }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ facultys.faculty_id }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        {% for course in facultys.courses_taught.all %}
+                            {{ course.title }}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-4">
+        <a href="{% url 'faculty_list' %}" class="inline-block px-4 py-2 text-sm font-medium text-white bg-red-800 rounded hover:bg-gray-600">Cancel</a>
+        <a href="{% url 'faculty_update' facultys.id %}" class="inline-block px-4 py-2 text-sm font-medium text-white bg-gray-800 rounded hover:bg-blue-600">Update</a>
+        <a href="{% url 'faculty_delete' facultys.id %}" class="inline-block px-4 py-2 text-sm font-medium text-white bg-red-500 rounded hover:bg-red-600">Delete</a>
+    </div>
+</div>
+{% endblock %}

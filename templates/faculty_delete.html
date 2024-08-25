@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mx-auto p-4">
+    <h1 class="text-2xl font-bold text-primary text-center mb-4">Faculties</h1>
+
+    <div class="overflow-x-auto">
+        <h1 class="text-center text-3xl font-bold text-red-600 mb-4">Delete Faculty</h1>
+        <p class="text-center text-lg mb-6">Are you sure you want to delete this course: <span class="font-semibold">{{ course.title }}</span>?</p>
+        
+        <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
+            <thead class="bg-gray-800 text-white border-b">
+                <tr>
+                    <th class="py-2 px-4 text-left">Name</th>
+                    <th class="py-2 px-4 text-left">Department</th>
+                    <th class="py-2 px-4 text-left">Faculty ID</th>
+                    <th class="py-2 px-4 text-left">Courses Taught</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-b hover:bg-gray-50">
+                    <td class="py-2 px-4">{{ facultys.name }}</td>
+                    <td class="py-2 px-4">{{ facultys.department }}</td>
+                    <td class="py-2 px-4">{{ facultys.faculty_id }}</td>
+                    <td class="py-2 px-4 border-b">
+                        {% for course in facultys.courses_taught.all %}
+                            {{ course.title }}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </td
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <form method="post" class="mt-6">
+        {% csrf_token %}
+        <a href="{% url 'faculty_list' %}" class="inline-block px-4 py-2 text-white bg-gray-800 rounded-lg hover:bg-gray-700">Cancel</a>
+        <button type="submit" class="inline-block px-4 py-2 text-white bg-red-600 rounded-lg hover:bg-red-500 ml-4">Delete</button>
+    </form>
+</div>
+{% endblock %}

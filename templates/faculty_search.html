@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mx-auto p-4">
+    <h2 class="text-3xl font-bold text-center mb-6 text-gray-800">Search Results for "{{ query }}"</h2>
+
+    <div class="flex justify-start mb-4">
+        <a href="{% url 'faculty_list' %}" class="bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-700">Back</a>
+    </div>
+
+    {% if results %}
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
+            <thead class="bg-gray-800 text-white">
+                <tr>
+                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Name</th>
+                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Department</th>
+                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Faculty ID</th>
+                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Courses Taught</th>
+                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for Fuculty in results %}
+                <tr class="hover:bg-gray-100 transition-colors duration-150">
+                    <td class="py-3 px-4 border-b">{{ Fuculty.name }}</td>
+                    <td class="py-3 px-4 border-b">{{ Fuculty.department }}</td>
+                    <td class="py-3 px-4 border-b">{{ Fuculty.faculty_id }}</td>
+                    <td class="py-3 px-4 border-b">
+                        {% for course in Fuculty.courses_taught.all %}
+                            {{ course.title }}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td class="py-3 px-4 border-b flex space-x-2">
+                        <a href="{% url 'faculty_update' Fuculty.id %}" class="inline-block px-2 py-2 text-sm font-medium text-white bg-blue-600 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <!-- Small Update Icon -->
+                            <svg class="w-4 h-4 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 20h9m-9-9v9m0-9H3m9 0l-9-9"/>
+                            </svg>
+                        </a>
+                        <a href="{% url 'faculty_delete' Fuculty.id %}" class="inline-block px-2 py-2 text-sm font-medium text-white bg-red-600 rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500">
+                            <!-- Small Delete Icon -->
+                            <svg class="w-4 h-4 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-1 12.28A2 2 0 0116 21H8a2 2 0 01-2-1.72L5 7m9-4V3a2 2 0 00-4 0v2H5m6 0h2"/>
+                            </svg>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p class="text-lg font-semibold text-gray-700 mt-6 text-center">No faculty members found.</p>
+    {% endif %}
+</div>
+
+{% endblock %}

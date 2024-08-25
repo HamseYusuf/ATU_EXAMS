@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mx-auto p-4">
+    <h1 class="text-3xl font-bold text-center mb-4 text-gray-800">Faculty List</h1>
+    
+    <div class="flex justify-end mb-4 items-center">
+        <form method="GET" action="{% url 'faculty_search' %}" class="flex items-center">
+            <input type="text" name="q" placeholder="Search faculty" required 
+                   class="border border-gray-300 rounded-lg px-4 py-2 mr-2 w-80 focus:outline-none focus:ring-2 focus:ring-red-500">
+            <input type="submit" name="search" class="bg-red-800 text-white px-4 py-2 rounded-lg hover:bg-red-900 focus:outline-none focus:ring-2 focus:ring-red-500" value="Search">
+        </form>
+    </div>
+    
+    <a href="{% url 'faculty_create' %}" class="bg-red-800 text-white px-4 py-2 rounded-lg hover:bg-green-600 mb-4 inline-block focus:outline-none focus:ring-2 focus:ring-green-500">Add Faculty</a>
+    
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
+            <thead class="bg-gray-800 text-white">
+                <tr>
+                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Name</th>
+                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Department</th>
+                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Faculty ID</th>
+                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Courses Taught</th>
+                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for faculty in facultys %}
+                <tr class="hover:bg-gray-100 transition-colors duration-150">
+                    <td class="py-3 px-4 border-b">{{ faculty.name }}</td>
+                    <td class="py-3 px-4 border-b">{{ faculty.department }}</td>
+                    <td class="py-3 px-4 border-b">{{ faculty.faculty_id }}</td>
+                    <td class="py-3 px-4 border-b">
+                        {% for course in faculty.courses_taught.all %}
+                            {{ course.title }}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td class="py-3 px-4 border-b flex space-x-2">
+                        <a href="{% url 'faculty_update' faculty.id %}" class="inline-block px-3 py-2 text-sm font-medium text-white bg-blue-600 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <!-- Update Icon -->
+                            <svg class="w-4 h-4 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6v14a1 1 0 001 1h14a1 1 0 001-1V6m-6-3v4m-4-4v4M6 10h12m-6 0v12"/>
+                            </svg>
+                        </a>
+                        <a href="{% url 'faculty_delete' faculty.id %}" class="inline-block px-3 py-2 text-sm font-medium text-white bg-red-600 rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500">
+                            <!-- Delete Icon -->
+                            <svg class="w-4 h-4 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 10h12m-6 6v-6m6 6h-2a1 1 0 01-1-1V7a1 1 0 011-1h1.5a1 1 0 011 1h1.5a1 1 0 011 1v12a1 1 0 01-1 1h-2M6 4h12m-4 0v4H10V4"/>
+                            </svg>
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="py-4 px-4 text-center text-gray-500">No faculty members found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

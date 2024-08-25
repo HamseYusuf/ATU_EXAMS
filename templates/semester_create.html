@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main class="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm mx-auto mt-10">
+    <h1 class="text-3xl font-semibold mb-6 text-center text-gray-800">Create sem</h1>
+    <form method="post" class="space-y-6">
+        {% csrf_token %}
+        <div class="space-y-4">
+            {% for field in form %}
+            <div class="flex flex-col">
+                <label for="{{ field.id_for_label }}" class="text-gray-700 font-medium mb-2">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                <p class="text-red-600 text-sm mt-1">{{ field.errors }}</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        <button type="submit" class="w-full bg-red-900 hover:bg-red-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-red-500">
+            Create semester
+        </button>
+    </form>
+</main>
+{% endblock %}
