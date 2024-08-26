@@ -18,88 +18,38 @@
     </style>
 </head>
 <body class="bg-gray-100">
-
-    <!-- Sidebar -->
     <div class="flex">
+        <!-- Sidebar -->
         <aside id="sidebar" class="w-64 bg-red-800 text-white min-h-screen p-4 transition-transform duration-300 ease-in-out hidden-sidebar">
             <div class="text-2xl font-bold mb-6">Examination System</div>
-            {% if user.is_authenticated %} 
             <ul>
-                <li class="mb-4">
-                    <a href="{% url 'course_list' %}" class="flex items-center text-white hover:bg-red-700 p-2 rounded">
-                        <i class="fas fa-book mr-3"></i> Courses
-                    </a>
-                </li>
-                <li class="mb-4">
-                    <a href="{% url 'semester_list' %}" class="flex items-center text-white hover:bg-red-700 p-2 rounded">
-                        <i class="fas fa-calendar-alt mr-3"></i> Semesters
-                    </a>
-                </li>
-                <li class="mb-4">
-                    <a href="{% url 'student_list' %}" class="flex items-center text-white hover:bg-red-700 p-2 rounded">
-                        <i class="fas fa-user-graduate mr-3"></i> Students
-                    </a>
-                </li>
-                <li class="mb-4">
-                    <a href="{% url 'dapart_list' %}" class="flex items-center text-white hover:bg-red-700 p-2 rounded">
-                        <i class="fas fa-building mr-3"></i> Departments
-                    </a>
-                </li>
-                <li class="mb-4">
-                    <a href="{% url 'faculty_list' %}" class="flex items-center text-white hover:bg-red-700 p-2 rounded">
-                        <i class="fas fa-chalkboard-teacher mr-3"></i> Faculty
-                    </a>
-                </li>
-                <li class="mb-4">
-                    <a href="{% url 'batch_list' %}" class="flex items-center text-white hover:bg-red-700 p-2 rounded">
-                        <i class="fas fa-users mr-3"></i> Batches
-                    </a>
-                </li>
-                <li class="mb-4">
-                    <a href="{% url 'exam_list' %}" class="flex items-center text-white hover:bg-red-700 p-2 rounded">
-                        <i class="fas fa-clipboard-list mr-3"></i> Exam Results
-                    </a>
-                </li>
-                <li class="mb-4">
-                    <a href="{% url 'login' %}" class="flex items-center text-white hover:bg-red-700 p-2 rounded">
-                        <i class="fas fa-sign-out-alt mr-3"></i> Logout
-                    </a>
-                </li>
+                {% if user.is_authenticated %}
+                    <li class="mb-4"><a href="{% url 'course_list' %}" class="flex items-center text-white hover:bg-red-700 p-2 rounded"><i class="fas fa-book mr-3"></i> Courses</a></li>
+                    <li class="mb-4"><a href="{% url 'semester_list' %}" class="flex items-center text-white hover:bg-red-700 p-2 rounded"><i class="fas fa-calendar-alt mr-3"></i> Semesters</a></li>
+                    <li class="mb-4"><a href="{% url 'student_list' %}" class="flex items-center text-white hover:bg-red-700 p-2 rounded"><i class="fas fa-user-graduate mr-3"></i> Students</a></li>
+                    <li class="mb-4"><a href="{% url 'dapart_list' %}" class="flex items-center text-white hover:bg-red-700 p-2 rounded"><i class="fas fa-building mr-3"></i> Departments</a></li>
+                    <li class="mb-4"><a href="{% url 'faculty_list' %}" class="flex items-center text-white hover:bg-red-700 p-2 rounded"><i class="fas fa-chalkboard-teacher mr-3"></i> Faculty</a></li>
+                    <li class="mb-4"><a href="{% url 'batch_list' %}" class="flex items-center text-white hover:bg-red-700 p-2 rounded"><i class="fas fa-users mr-3"></i> Batches</a></li>
+                    <li class="mb-4"><a href="{% url 'exam_list' %}" class="flex items-center text-white hover:bg-red-700 p-2 rounded"><i class="fas fa-clipboard-list mr-3"></i> Exam Results</a></li>
+                    <li class="mb-4"><a href="{% url 'login' %}" class="flex items-center text-white hover:bg-red-700 p-2 rounded"><i class="fas fa-sign-out-alt mr-3"></i> Logout</a></li>
                 {% else %}
-                <li class="mb-4">
-                    <a href="{% url 'sing_up' %}" class="flex items-center text-white hover:bg-red-700 p-2 rounded">
-                        <i class="fas fa-user-plus mr-3"></i> Signup
-                    </a>
-                </li>
-                <li class="mb-4">
-                    <a href="{% url 'login' %}" class="flex items-center text-white hover:bg-red-700 p-2 rounded">
-                        <i class="fas fa-sign-in-alt mr-3"></i> Login
-                    </a>
-                </li>
+                    <li class="mb-4"><a href="{% url 'sing_up' %}" class="flex items-center text-white hover:bg-red-700 p-2 rounded"><i class="fas fa-user-plus mr-3"></i> Signup</a></li>
+                    <li class="mb-4"><a href="{% url 'login' %}" class="flex items-center text-white hover:bg-red-700 p-2 rounded"><i class="fas fa-sign-in-alt mr-3"></i> Login</a></li>
                 {% endif %}
             </ul>
         </aside>
 
         <!-- Main Content -->
         <div class="flex-grow p-6">
-            <!-- Sidebar Toggle Button -->
-            <button id="sidebarToggle" class="text-red-800 mb-4 focus:outline-none">
-                <i class="fas fa-bars text-2xl"></i>
-            </button>
-
+            <button id="sidebarToggle" class="text-red-800 mb-4 focus:outline-none"><i class="fas fa-bars text-2xl"></i></button>
             <nav class="bg-red-800 p-4 text-white">
                 <div class="container mx-auto flex justify-between">
                     <a href="{% url 'home' %}" class="text-2xl font-bold">Examination System</a>
                 </div>
             </nav>
-
-            <!-- Content -->
             <main class="min-h-screen">
-                {% block content %}
-                {% endblock %}
+                {% block content %}{% endblock %}
             </main>
-
-            <!-- Footer -->
             <footer class="bg-red-800 text-white p-3">
                 <div class="container mx-auto text-center">
                     <p>&copy; 2024 Examination System. All rights reserved.</p>
